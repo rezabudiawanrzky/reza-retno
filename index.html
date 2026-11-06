@@ -1571,19 +1571,22 @@
 
         function setAutoscrollSpeed(speed, btn) {
             selectedSpeed = speed;
-            
+
             // Update active state on menu items
             document.querySelectorAll('.autoscroll-menu-item').forEach(item => {
                 item.classList.remove('active');
             });
             btn.classList.add('active');
-            
+
             // If currently autoscrolling, restart with new speed
             if (isAutoscrolling) {
                 clearInterval(autoscrollInterval);
                 startAutoscroll();
+            } else {
+                // Start autoscroll if not running
+                startAutoscroll();
             }
-            
+
             // Hide menu after selection
             setTimeout(() => {
                 document.getElementById('autoscrollMenu').classList.remove('visible');
