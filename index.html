@@ -915,7 +915,7 @@
 
         /* ==================== RSVP & WISHES ==================== */
         .rsvp-section {
-            background: var(--cream);
+            background: linear-gradient(rgba(250,248,240,0.9), rgba(250,248,240,0.9)), url('couple-flowers-full.jpeg') center/cover no-repeat fixed;
             padding: 80px 20px;
             text-align: center;
         }
@@ -1539,17 +1539,6 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="guestCount">Jumlah Tamu</label>
-                    <select id="guestCount" name="guestCount">
-                        <option value="1">1 Orang</option>
-                        <option value="2">2 Orang</option>
-                        <option value="3">3 Orang</option>
-                        <option value="4">4 Orang</option>
-                        <option value="5">5 Orang</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
                     <label for="wishMessage">Ucapan & Doa untuk Pengantin</label>
                     <textarea id="wishMessage" name="wishMessage" placeholder="Tuliskan ucapan dan doa terbaik Anda untuk Reza & Retno..."></textarea>
                 </div>
@@ -1920,7 +1909,6 @@
             
             const name = document.getElementById('guestName').value.trim();
             const attendance = document.getElementById('attendance').value;
-            const guestCount = document.getElementById('guestCount').value;
             const message = document.getElementById('wishMessage').value.trim();
             
             if (!name || !attendance) {
@@ -1932,7 +1920,6 @@
             const wish = {
                 name: name,
                 attendance: attendance,
-                guestCount: guestCount,
                 message: message || 'Selamat menempuh hidup baru! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah.',
                 time: new Date().toLocaleString('id-ID', { 
                     dateStyle: 'medium', 
