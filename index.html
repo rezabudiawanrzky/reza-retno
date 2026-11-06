@@ -89,6 +89,60 @@
             50% { box-shadow: 0 4px 25px rgba(184, 134, 11, 0.6); }
         }
 
+        /* ==================== AUTOSCROLL SPEED MENU ==================== */
+        .autoscroll-menu {
+            position: fixed;
+            bottom: 180px;
+            right: 20px;
+            z-index: 950;
+            background: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            padding: 8px;
+            opacity: 0;
+            transform: translateY(10px) scale(0.95);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .autoscroll-menu.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .autoscroll-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            border: none;
+            background: transparent;
+            color: var(--dark-soft);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .autoscroll-menu-item:hover {
+            background: var(--cream);
+            color: var(--gold);
+        }
+
+        .autoscroll-menu-item.active {
+            background: var(--gold-light);
+            color: var(--white);
+        }
+
+        .autoscroll-menu-item svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
         /* ==================== COVER ==================== */
         .cover {
             position: fixed;
@@ -973,8 +1027,24 @@
 </head>
 <body class="locked">
 
+    <!-- Autoscroll Speed Menu -->
+    <div class="autoscroll-menu" id="autoscrollMenu">
+        <button class="autoscroll-menu-item" onclick="setAutoscrollSpeed(0.5, this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 8 14"/></svg>
+            Slow
+        </button>
+        <button class="autoscroll-menu-item active" onclick="setAutoscrollSpeed(1, this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 10"/></svg>
+            Normal
+        </button>
+        <button class="autoscroll-menu-item" onclick="setAutoscrollSpeed(2, this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Fast
+        </button>
+    </div>
+
     <!-- Autoscroll Button -->
-    <button class="autoscroll-btn" id="autoscrollBtn" onclick="toggleAutoscroll()" title="Auto Scroll">
+    <button class="autoscroll-btn" id="autoscrollBtn" onclick="toggleAutoscrollMenu()" title="Auto Scroll">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 5v14M5 12l7 7 7-7"/>
         </svg>
@@ -1484,49 +1554,89 @@
         // ==================== AUTOSCROLL ====================
         let autoscrollInterval = null;
         let isAutoscrolling = false;
-        const autoscrollSpeed = 1; // pixels per frame (smooth speed)
+        let isMenuVisible = false;
+        let selectedSpeed = 1; // default speed (Normal)
+        const speedMap = { 0.5: 'Slow', 1: 'Normal', 2: 'Fast' };
+
+        function toggleAutoscrollMenu() {
+            const menu = document.getElementById('autoscrollMenu');
+            isMenuVisible = !isMenuVisible;
+            
+            if (isMenuVisible) {
+                menu.classList.add('visible');
+            } else {
+                menu.classList.remove('visible');
+            }
+        }
+
+        function setAutoscrollSpeed(speed, btn) {
+            selectedSpeed = speed;
+            
+            // Update active state on menu items
+            document.querySelectorAll('.autoscroll-menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            btn.classList.add('active');
+            
+            // If currently autoscrolling, restart with new speed
+            if (isAutoscrolling) {
+                clearInterval(autoscrollInterval);
+                startAutoscroll();
+            }
+            
+            // Hide menu after selection
+            setTimeout(() => {
+                document.getElementById('autoscrollMenu').classList.remove('visible');
+                isMenuVisible = false;
+            }, 300);
+        }
+
+        function startAutoscroll() {
+            const btn = document.getElementById('autoscrollBtn');
+            isAutoscrolling = true;
+            btn.classList.add('active');
+            btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+            
+            autoscrollInterval = setInterval(() => {
+                window.scrollBy({
+                    top: selectedSpeed,
+                    behavior: 'auto'
+                });
+                
+                // Stop when reaching bottom
+                if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 10) {
+                    stopAutoscroll();
+                }
+            }, 16); // ~60fps
+        }
+
+        function stopAutoscroll() {
+            const btn = document.getElementById('autoscrollBtn');
+            clearInterval(autoscrollInterval);
+            autoscrollInterval = null;
+            isAutoscrolling = false;
+            btn.classList.remove('active');
+            btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>';
+        }
 
         function toggleAutoscroll() {
-            const btn = document.getElementById('autoscrollBtn');
-            
             if (isAutoscrolling) {
-                // Stop autoscroll
-                clearInterval(autoscrollInterval);
-                autoscrollInterval = null;
-                isAutoscrolling = false;
-                btn.classList.remove('active');
-                btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>';
+                stopAutoscroll();
             } else {
-                // Start autoscroll
-                isAutoscrolling = true;
-                btn.classList.add('active');
-                btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
-                
-                autoscrollInterval = setInterval(() => {
-                    window.scrollBy({
-                        top: autoscrollSpeed,
-                        behavior: 'auto'
-                    });
-                    
-                    // Stop when reaching bottom
-                    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 10) {
-                        toggleAutoscroll();
-                    }
-                }, 16); // ~60fps
+                startAutoscroll();
             }
         }
 
         // Stop autoscroll when user manually scrolls
-        let userScrollTimeout;
         window.addEventListener('wheel', (e) => {
             if (isAutoscrolling) {
-                toggleAutoscroll();
+                stopAutoscroll();
             }
         });
 
         window.addEventListener('touchmove', (e) => {
             if (isAutoscrolling) {
-                toggleAutoscroll();
+                stopAutoscroll();
             }
         });
     </script>
