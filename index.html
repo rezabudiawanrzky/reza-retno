@@ -92,7 +92,7 @@
         /* ==================== AUTOSCROLL SPEED MENU ==================== */
         .autoscroll-menu {
             position: fixed;
-            bottom: 225px;
+            bottom: 180px;
             right: 20px;
             z-index: 950;
             background: var(--white);
@@ -1029,7 +1029,7 @@
 
     <!-- Autoscroll Speed Menu -->
     <div class="autoscroll-menu" id="autoscrollMenu">
-        <button class="autoscroll-menu-item" onclick="setAutoscrollSpeed(0.5, this)">
+        <button class="autoscroll-menu-item" onclick="setAutoscrollSpeed(0.3, this)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 8 14"/></svg>
             Slow
         </button>
@@ -1037,24 +1037,16 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 10"/></svg>
             Normal
         </button>
-        <button class="autoscroll-menu-item" onclick="setAutoscrollSpeed(2, this)">
+        <button class="autoscroll-menu-item" onclick="setAutoscrollSpeed(3, this)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             Fast
         </button>
     </div>
 
-    <!-- Autoscroll Play/Pause Button -->
-    <button class="autoscroll-btn" id="autoscrollPlayBtn" onclick="toggleAutoscroll()" title="Play/Pause Auto Scroll" style="bottom: 120px;">
+    <!-- Autoscroll Button -->
+    <button class="autoscroll-btn" id="autoscrollBtn" onclick="toggleAutoscrollMenu()" title="Auto Scroll">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polygon points="5 3 19 12 5 21 5 3"/>
-        </svg>
-    </button>
-
-    <!-- Autoscroll Menu Button -->
-    <button class="autoscroll-btn" id="autoscrollMenuBtn" onclick="toggleAutoscrollMenu()" title="Auto Scroll Speed" style="bottom: 175px; width: 40px; height: 40px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
         </svg>
     </button>
 
@@ -1410,8 +1402,7 @@
                 cover.style.display = 'none';
                 document.getElementById('navFloat').classList.add('visible');
                 document.getElementById('musicPlayer').classList.add('visible');
-                document.getElementById('autoscrollPlayBtn').classList.add('visible');
-                document.getElementById('autoscrollMenuBtn').classList.add('visible');
+                document.getElementById('autoscrollBtn').classList.add('visible');
                 playMusic();
             }, 800);
         }
@@ -1599,6 +1590,9 @@
                         stopAutoscroll();
                     }
                 }, 16);
+            } else {
+                // Start autoscroll with selected speed
+                startAutoscroll();
             }
 
             // Hide menu after selection
@@ -1609,7 +1603,7 @@
         }
 
         function startAutoscroll() {
-            const btn = document.getElementById('autoscrollPlayBtn');
+            const btn = document.getElementById('autoscrollBtn');
             isAutoscrolling = true;
             btn.classList.add('active');
             btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
@@ -1627,7 +1621,7 @@
         }
 
         function stopAutoscroll() {
-            const btn = document.getElementById('autoscrollPlayBtn');
+            const btn = document.getElementById('autoscrollBtn');
             clearInterval(autoscrollInterval);
             autoscrollInterval = null;
             isAutoscrolling = false;
@@ -1658,9 +1652,9 @@
 
         // Close menu when clicking outside
         document.addEventListener('click', (e) => {
-            const menuBtn = document.getElementById('autoscrollMenuBtn');
+            const btn = document.getElementById('autoscrollBtn');
             const menu = document.getElementById('autoscrollMenu');
-            if (isMenuVisible && !menuBtn.contains(e.target) && !menu.contains(e.target)) {
+            if (isMenuVisible && !btn.contains(e.target) && !menu.contains(e.target)) {
                 menu.classList.remove('visible');
                 isMenuVisible = false;
             }
