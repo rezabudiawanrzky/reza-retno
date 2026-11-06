@@ -1637,19 +1637,6 @@
             }
         }
 
-        // Stop autoscroll when user manually scrolls
-        window.addEventListener('wheel', (e) => {
-            if (isAutoscrolling) {
-                stopAutoscroll();
-            }
-        });
-
-        window.addEventListener('touchmove', (e) => {
-            if (isAutoscrolling) {
-                stopAutoscroll();
-            }
-        });
-
         // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             const btn = document.getElementById('autoscrollBtn');
