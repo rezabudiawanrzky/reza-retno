@@ -47,6 +47,90 @@
         ::-webkit-scrollbar-track { background: var(--cream); }
         ::-webkit-scrollbar-thumb { background: var(--gold-light); border-radius: 3px; }
 
+        /* ==================== MIST/FOG ANIMATION ==================== */
+        .mist-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .mist-layer {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 30%, rgba(250, 248, 240, 0.06) 0%, transparent 40%),
+                radial-gradient(ellipse at 80% 70%, rgba(255, 255, 255, 0.07) 0%, transparent 45%);
+            animation: drift-mist 30s ease-in-out infinite;
+            opacity: 0.4;
+        }
+
+        .mist-layer:nth-child(2) {
+            background: 
+                radial-gradient(ellipse at 40% 60%, rgba(255, 255, 255, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 40%, rgba(250, 248, 240, 0.05) 0%, transparent 40%);
+            animation: drift-mist-reverse 35s ease-in-out infinite;
+            opacity: 0.3;
+        }
+
+        .mist-layer:nth-child(3) {
+            background: 
+                radial-gradient(ellipse at 30% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 45%),
+                radial-gradient(ellipse at 90% 60%, rgba(250, 248, 240, 0.04) 0%, transparent 40%);
+            animation: drift-mist 40s ease-in-out infinite;
+            animation-delay: -10s;
+            opacity: 0.25;
+        }
+
+        @keyframes drift-mist {
+            0%, 100% {
+                transform: translateX(0) translateY(0);
+            }
+            25% {
+                transform: translateX(-10%) translateY(2%);
+            }
+            50% {
+                transform: translateX(-5%) translateY(-1%);
+            }
+            75% {
+                transform: translateX(-15%) translateY(1%);
+            }
+        }
+
+        @keyframes drift-mist-reverse {
+            0%, 100% {
+                transform: translateX(0) translateY(0);
+            }
+            25% {
+                transform: translateX(10%) translateY(-2%);
+            }
+            50% {
+                transform: translateX(5%) translateY(1%);
+            }
+            75% {
+                transform: translateX(15%) translateY(-1%);
+            }
+        }
+
+        /* Subtle overlay for misty atmosphere */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(250, 248, 240, 0.02) 0%, transparent 50%, rgba(250, 248, 240, 0.02) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
         /* ==================== COVER ==================== */
         .cover {
             position: fixed;
@@ -930,6 +1014,13 @@
     </style>
 </head>
 <body class="locked">
+
+    <!-- Mist/Fog Animation -->
+    <div class="mist-container">
+        <div class="mist-layer"></div>
+        <div class="mist-layer"></div>
+        <div class="mist-layer"></div>
+    </div>
 
     <!-- ==================== COVER ==================== -->
     <div class="cover" id="cover">
