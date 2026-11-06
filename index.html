@@ -35,37 +35,6 @@
             color: var(--dark);
             background: var(--cream);
             overflow-x: hidden;
-            position: relative;
-        }
-
-        /* Dynamic Background from Gallery */
-        .dynamic-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-
-        .dynamic-bg.active {
-            opacity: 1;
-        }
-
-        /* Overlay untuk background agar konten tetap terbaca */
-        .dynamic-bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: rgba(250, 248, 240, 0.85);
         }
 
         body.locked {
@@ -1058,10 +1027,6 @@
 </head>
 <body class="locked">
 
-    <!-- Dynamic Background from Gallery -->
-    <div class="dynamic-bg" id="dynamicBg"></div>
-    <div class="dynamic-bg-overlay"></div>
-
     <!-- Autoscroll Speed Menu -->
     <div class="autoscroll-menu" id="autoscrollMenu">
         <button class="autoscroll-menu-item" onclick="setAutoscrollSpeed(3, this)">
@@ -1744,47 +1709,6 @@
                 isMenuVisible = false;
             }
         });
-
-        // ==================== DYNAMIC BACKGROUND FROM GALLERY ====================
-        // Daftar foto dari gallery yang bisa dijadikan background
-        const galleryPhotos = [
-            'couple-chairs.jpeg',
-            'couple-flowers.jpeg',
-            'couple-flowers-full.jpeg',
-            'couple-tradisional1.jpeg',
-            'couple-tradisional2.jpeg',
-            'couple-tradisional3.jpeg',
-            'couple-tradisional4.jpeg',
-            'reza-jawa.jpeg',
-            'retno-jawa.jpeg',
-            'reza-solo.jpeg',
-            'retno-solo-new.jpeg'
-        ];
-
-        // Fungsi untuk set background dinamis
-        function setDynamicBackground() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const bgParam = urlParams.get('bg');
-            
-            if (bgParam) {
-                const bgElement = document.getElementById('dynamicBg');
-                
-                // Cek apakah parameter adalah angka (index foto)
-                const bgIndex = parseInt(bgParam);
-                if (!isNaN(bgIndex) && bgIndex >= 1 && bgIndex <= galleryPhotos.length) {
-                    // Gunakan foto dari gallery berdasarkan index (1-based)
-                    bgElement.style.backgroundImage = `url('${galleryPhotos[bgIndex - 1]}')`;
-                    bgElement.classList.add('active');
-                } else if (galleryPhotos.includes(bgParam)) {
-                    // Gunakan nama file foto langsung
-                    bgElement.style.backgroundImage = `url('${bgParam}')`;
-                    bgElement.classList.add('active');
-                }
-            }
-        }
-
-        // Jalankan fungsi set background saat halaman dimuat
-        setDynamicBackground();
     </script>
 </body>
 </html>
