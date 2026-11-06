@@ -47,6 +47,48 @@
         ::-webkit-scrollbar-track { background: var(--cream); }
         ::-webkit-scrollbar-thumb { background: var(--gold-light); border-radius: 3px; }
 
+        /* ==================== AUTOSCROLL BUTTON ==================== */
+        .autoscroll-btn {
+            position: fixed;
+            bottom: 120px;
+            right: 20px;
+            z-index: 950;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--gold-light);
+            border: none;
+            color: var(--white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .autoscroll-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .autoscroll-btn:hover {
+            background: var(--gold);
+            transform: scale(1.1);
+        }
+
+        .autoscroll-btn.active {
+            background: var(--gold);
+            animation: pulse-gold 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-gold {
+            0%, 100% { box-shadow: 0 4px 15px rgba(184, 134, 11, 0.3); }
+            50% { box-shadow: 0 4px 25px rgba(184, 134, 11, 0.6); }
+        }
+
         /* ==================== COVER ==================== */
         .cover {
             position: fixed;
@@ -931,6 +973,13 @@
 </head>
 <body class="locked">
 
+    <!-- Autoscroll Button -->
+    <button class="autoscroll-btn" id="autoscrollBtn" onclick="toggleAutoscroll()" title="Auto Scroll">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+    </button>
+
     <!-- ==================== COVER ==================== -->
     <div class="cover" id="cover">
         <div class="cover-content">
@@ -1283,6 +1332,7 @@
                 cover.style.display = 'none';
                 document.getElementById('navFloat').classList.add('visible');
                 document.getElementById('musicPlayer').classList.add('visible');
+                document.getElementById('autoscrollBtn').classList.add('visible');
                 playMusic();
             }, 800);
         }
@@ -1429,6 +1479,55 @@
                     }
                 }
             });
+        });
+
+        // ==================== AUTOSCROLL ====================
+        let autoscrollInterval = null;
+        let isAutoscrolling = false;
+        const autoscrollSpeed = 1; // pixels per frame (smooth speed)
+
+        function toggleAutoscroll() {
+            const btn = document.getElementById('autoscrollBtn');
+            
+            if (isAutoscrolling) {
+                // Stop autoscroll
+                clearInterval(autoscrollInterval);
+                autoscrollInterval = null;
+                isAutoscrolling = false;
+                btn.classList.remove('active');
+                btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>';
+            } else {
+                // Start autoscroll
+                isAutoscrolling = true;
+                btn.classList.add('active');
+                btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+                
+                autoscrollInterval = setInterval(() => {
+                    window.scrollBy({
+                        top: autoscrollSpeed,
+                        behavior: 'auto'
+                    });
+                    
+                    // Stop when reaching bottom
+                    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 10) {
+                        toggleAutoscroll();
+                    }
+                }, 16); // ~60fps
+            }
+        }
+
+        // Stop autoscroll when user manually scrolls
+        let userScrollTimeout;
+        window.addEventListener('wheel', (e) => {
+            if (isAutoscrolling) {
+                toggleAutoscroll();
+            }
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            if (isAutoscrolling) {
+                toggleAutoscroll();
+            }
         });
     </script>
 </body>
