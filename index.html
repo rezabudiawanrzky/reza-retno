@@ -1313,11 +1313,11 @@
     <!-- ==================== GIFT ==================== -->
     <section class="section gift-section" id="gift">
         <div class="section-subtitle">Wedding Gift</div>
-        <div class="section-title">Amplop Digital</div>
+        <div class="section-title">Amplop Digital / Kirim Kado</div>
         <div class="divider"></div>
 
         <p class="gift-intro">
-            Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika Anda ingin memberikan tanda kasih, kami menyediakan amplop digital:
+            Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika Anda ingin memberikan tanda kasih, kami menyediakan amplop digital dan menerima pengiriman kado:
         </p>
 
         <div class="gift-toggle">
@@ -1341,6 +1341,27 @@
                 <button class="btn-copy" onclick="copyAccount('8761047710', this)">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                     Salin Nomor Rekening
+                </button>
+            </div>
+
+            <!-- Alamat Pengiriman Kado -->
+            <div class="gift-card" style="margin-top: 1.5rem; background: linear-gradient(135deg, rgba(212, 168, 67, 0.1) 0%, rgba(184, 134, 11, 0.05) 100%);">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 0.8rem;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                        <circle cx="12" cy="10" r="3"/>
+                    </svg>
+                    <div style="font-weight: 600; color: var(--gold); font-size: 0.95rem;">Alamat Pengiriman Kado</div>
+                </div>
+                <div style="color: var(--dark-soft); font-size: 0.9rem; line-height: 1.6; text-align: center;">
+                    Kp. Teleng, Rt/Rw. 004/003<br>
+                    Ds. Karang Baru, Kec. Cikarang Utara<br>
+                    Kab. Bekasi<br>
+                    <span style="color: var(--gold); font-size: 0.85rem; margin-top: 0.5rem; display: inline-block;">(Rumah Retno / Mba Tia)</span>
+                </div>
+                <button class="btn-copy" onclick="copyAddress(this)" style="margin-top: 1rem;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Salin Alamat
                 </button>
             </div>
         </div>
@@ -1479,6 +1500,25 @@
                     btn.innerHTML = `
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                         Salin Nomor Rekening
+                    `;
+                }, 2000);
+            });
+        }
+
+        // ==================== COPY ADDRESS ====================
+        function copyAddress(btn) {
+            const address = 'Kp. Teleng, Rt/Rw. 004/003, Ds. Karang Baru, Kec. Cikarang Utara, Kab. Bekasi';
+            navigator.clipboard.writeText(address).then(() => {
+                btn.classList.add('copied');
+                btn.innerHTML = `
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    Tersalin!
+                `;
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = `
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Salin Alamat
                     `;
                 }, 2000);
             });
