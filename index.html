@@ -1342,6 +1342,50 @@
         </div>
     </section>
 
+    <!-- ==================== RSVP & WISHES ==================== -->
+    <section class="section rsvp-section" id="rsvp">
+        <div class="section-subtitle">Kehadiran & Ucapan</div>
+        <div class="section-title">Konfirmasi Kehadiran</div>
+        <div class="divider"></div>
+
+        <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--dark-soft); max-width: 500px; margin: 0 auto 2rem; line-height: 1.8;">
+            Mohon konfirmasi kehadiran Anda dan berikan ucapan untuk pengantin
+        </p>
+
+        <div class="rsvp-form">
+            <form id="rsvpForm" onsubmit="submitRSVP(event)">
+                <div class="form-group">
+                    <label for="guestName">Nama Lengkap *</label>
+                    <input type="text" id="guestName" name="guestName" required placeholder="Masukkan nama Anda">
+                </div>
+
+                <div class="form-group">
+                    <label for="attendance">Konfirmasi Kehadiran *</label>
+                    <select id="attendance" name="attendance" required>
+                        <option value="">-- Pilih --</option>
+                        <option value="hadir">✅ Ya, Saya Akan Hadir</option>
+                        <option value="tidak_hadir">❌ Maaf, Saya Tidak Bisa Hadir</option>
+                        <option value="ragu">🤔 Masih Ragu</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="wishMessage">Ucapan & Doa untuk Pengantin</label>
+                    <textarea id="wishMessage" name="wishMessage" placeholder="Tuliskan ucapan dan doa terbaik Anda untuk Reza & Retno..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Kirim Konfirmasi</button>
+            </form>
+        </div>
+
+        <div class="wishes-list" id="wishesList">
+            <h3>💌 Ucapan dari Tamu</h3>
+            <div id="wishesContainer">
+                <div class="no-wishes">Belum ada ucapan. Jadilah yang pertama!</div>
+            </div>
+        </div>
+    </section>
+
     <!-- ==================== EVENT ==================== -->
     <section class="section event-section" id="event">
         <div class="section-subtitle">Wedding Event</div>
@@ -1508,50 +1552,6 @@
         </div>
         <div class="prayer-translation">
             "Semoga Allah memberkahimu di waktu bahagia dan memberkahimu di waktu susah, serta semoga Allah menyatukan kalian berdua dalam kebaikan."
-        </div>
-    </section>
-
-    <!-- ==================== RSVP & WISHES ==================== -->
-    <section class="section rsvp-section" id="rsvp">
-        <div class="section-subtitle">Kehadiran & Ucapan</div>
-        <div class="section-title">Konfirmasi Kehadiran</div>
-        <div class="divider"></div>
-
-        <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--dark-soft); max-width: 500px; margin: 0 auto 2rem; line-height: 1.8;">
-            Mohon konfirmasi kehadiran Anda dan berikan ucapan untuk pengantin
-        </p>
-
-        <div class="rsvp-form">
-            <form id="rsvpForm" onsubmit="submitRSVP(event)">
-                <div class="form-group">
-                    <label for="guestName">Nama Lengkap *</label>
-                    <input type="text" id="guestName" name="guestName" required placeholder="Masukkan nama Anda">
-                </div>
-
-                <div class="form-group">
-                    <label for="attendance">Konfirmasi Kehadiran *</label>
-                    <select id="attendance" name="attendance" required>
-                        <option value="">-- Pilih --</option>
-                        <option value="hadir">✅ Ya, Saya Akan Hadir</option>
-                        <option value="tidak_hadir">❌ Maaf, Saya Tidak Bisa Hadir</option>
-                        <option value="ragu">🤔 Masih Ragu</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="wishMessage">Ucapan & Doa untuk Pengantin</label>
-                    <textarea id="wishMessage" name="wishMessage" placeholder="Tuliskan ucapan dan doa terbaik Anda untuk Reza & Retno..."></textarea>
-                </div>
-
-                <button type="submit" class="btn-submit">Kirim Konfirmasi</button>
-            </form>
-        </div>
-
-        <div class="wishes-list" id="wishesList">
-            <h3>💌 Ucapan dari Tamu</h3>
-            <div id="wishesContainer">
-                <div class="no-wishes">Belum ada ucapan. Jadilah yang pertama!</div>
-            </div>
         </div>
     </section>
 
