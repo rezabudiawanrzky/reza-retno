@@ -1044,7 +1044,7 @@
     </div>
 
     <!-- Autoscroll Button -->
-    <button class="autoscroll-btn" id="autoscrollBtn" title="Play/Pause Auto Scroll (Long press for speed)">
+    <button class="autoscroll-btn" id="autoscrollBtn" onclick="toggleAutoscrollMenu()" title="Auto Scroll">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polygon points="5 3 19 12 5 21 5 3"/>
         </svg>
@@ -1658,46 +1658,6 @@
             if (isMenuVisible && !btn.contains(e.target) && !menu.contains(e.target)) {
                 menu.classList.remove('visible');
                 isMenuVisible = false;
-            }
-        });
-
-        // Long press detection for speed menu
-        let pressTimer = null;
-        let isLongPress = false;
-        const autoscrollBtn = document.getElementById('autoscrollBtn');
-
-        autoscrollBtn.addEventListener('mousedown', () => {
-            isLongPress = false;
-            pressTimer = setTimeout(() => {
-                isLongPress = true;
-                toggleAutoscrollMenu();
-            }, 500); // 500ms = long press
-        });
-
-        autoscrollBtn.addEventListener('mouseup', () => {
-            clearTimeout(pressTimer);
-            if (!isLongPress) {
-                toggleAutoscroll();
-            }
-        });
-
-        autoscrollBtn.addEventListener('mouseleave', () => {
-            clearTimeout(pressTimer);
-        });
-
-        // Touch events for mobile
-        autoscrollBtn.addEventListener('touchstart', () => {
-            isLongPress = false;
-            pressTimer = setTimeout(() => {
-                isLongPress = true;
-                toggleAutoscrollMenu();
-            }, 500);
-        });
-
-        autoscrollBtn.addEventListener('touchend', () => {
-            clearTimeout(pressTimer);
-            if (!isLongPress) {
-                toggleAutoscroll();
             }
         });
     </script>
