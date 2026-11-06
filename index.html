@@ -1580,9 +1580,14 @@
             });
             btn.classList.add('active');
 
+            // Clear any existing interval first
+            if (autoscrollInterval) {
+                clearInterval(autoscrollInterval);
+                autoscrollInterval = null;
+            }
+
             // If currently autoscrolling, restart with new speed immediately
             if (isAutoscrolling) {
-                clearInterval(autoscrollInterval);
                 autoscrollInterval = setInterval(() => {
                     window.scrollBy({
                         top: selectedSpeed,
@@ -1606,6 +1611,12 @@
         }
 
         function startAutoscroll() {
+            // Clear any existing interval first to prevent multiple intervals
+            if (autoscrollInterval) {
+                clearInterval(autoscrollInterval);
+                autoscrollInterval = null;
+            }
+
             const btn = document.getElementById('autoscrollBtn');
             isAutoscrolling = true;
             btn.classList.add('active');
