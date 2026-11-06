@@ -9,11 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #b8860b;
-            --gold-light: #d4a843;
-            --gold-dark: #8b6914;
-            --cream: #faf8f0;
-            --cream-dark: #f0ead6;
+            --gold: #cc7a5a;
+            --gold-light: #e8a87c;
+            --gold-dark: #8b4726;
+            --cream: #faf0e6;
+            --cream-dark: #f5e6d3;
             --dark: #2c2c2c;
             --dark-soft: #4a4a4a;
             --white: #ffffff;
@@ -100,35 +100,6 @@
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
-        }
-
-        /* ==================== PARALLAX SECTIONS ==================== */
-        .parallax-section {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .parallax-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 120%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            will-change: transform;
-            z-index: -1;
-        }
-
-        .parallax-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(250, 248, 240, 0.85);
-            z-index: -1;
         }
 
         body {
@@ -461,8 +432,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            background: linear-gradient(180deg, rgba(26,26,46,0.6) 0%, rgba(22,33,62,0.6) 100%), url('couple-flowers.jpeg') center/cover no-repeat;
             position: relative;
             overflow: hidden;
+            background-attachment: fixed;
         }
 
         .hero-content {
@@ -471,10 +444,6 @@
             padding: 2rem;
             position: relative;
             z-index: 1;
-        }
-
-        .hero .parallax-overlay {
-            background: linear-gradient(180deg, rgba(26,26,46,0.6) 0%, rgba(22,33,62,0.6) 100%);
         }
 
         .hero-label {
@@ -537,21 +506,8 @@
 
         /* ==================== QURAN VERSE ==================== */
         .quran-section {
+            background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('couple-tradisional1.jpeg') center/cover no-repeat fixed;
             padding: 60px 20px;
-            position: relative;
-        }
-
-        .quran-section .bismillah,
-        .quran-section .divider,
-        .quran-section .quran-verse,
-        .quran-section .quran-translation,
-        .quran-section .quran-ref {
-            position: relative;
-            z-index: 1;
-        }
-
-        .quran-section .parallax-overlay {
-            background: rgba(255, 255, 255, 0.85);
         }
 
         .quran-verse {
@@ -1031,20 +987,9 @@
 
         /* ==================== RSVP & WISHES ==================== */
         .rsvp-section {
+            background: var(--cream);
             padding: 80px 20px;
             text-align: center;
-            position: relative;
-        }
-
-        .rsvp-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(250,248,240,0.9), rgba(250,248,240,0.9)), url('couple-flowers-full.jpeg') center/cover no-repeat fixed;
-            z-index: -1;
         }
 
         .rsvp-form {
@@ -1366,9 +1311,7 @@
     </nav>
 
     <!-- ==================== HERO ==================== -->
-    <section class="hero parallax-section" id="home">
-        <div class="parallax-bg" style="background-image: url('couple-flowers-full.jpeg');"></div>
-        <div class="parallax-overlay"></div>
+    <section class="hero" id="home">
         <div class="hero-content">
             <div class="hero-label">The Wedding of</div>
             <div class="hero-names">Reza & Retno</div>
@@ -1397,9 +1340,7 @@
     </section>
 
     <!-- ==================== QURAN VERSE ==================== -->
-    <section class="quran-section section parallax-section" id="quran">
-        <div class="parallax-bg" style="background-image: url('couple-chairs.jpeg');"></div>
-        <div class="parallax-overlay"></div>
+    <section class="quran-section section" id="quran">
         <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
         <div class="divider"></div>
         <div class="quran-verse">
@@ -2095,31 +2036,6 @@
                 document.getElementById('loadingScreen').classList.add('hidden');
             }, 1500); // 1.5 detik delay
         });
-
-        // ==================== PARALLAX SCROLLING ====================
-        // Parallax effect untuk section tertentu
-        const parallaxSections = document.querySelectorAll('.parallax-section');
-        
-        function updateParallax() {
-            parallaxSections.forEach(section => {
-                const bg = section.querySelector('.parallax-bg');
-                if (bg) {
-                    const sectionTop = section.offsetTop;
-                    const scrollY = window.scrollY;
-                    const speed = 0.5; // Kecepatan parallax (0.5 = setengah kecepatan scroll)
-                    const yPos = (scrollY - sectionTop) * speed;
-                    bg.style.transform = `translateY(${yPos}px)`;
-                }
-            });
-        }
-
-        // Update parallax saat scroll
-        window.addEventListener('scroll', () => {
-            requestAnimationFrame(updateParallax);
-        });
-
-        // Initial parallax update
-        updateParallax();
     </script>
 </body>
 </html>
