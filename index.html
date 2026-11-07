@@ -1472,7 +1472,7 @@
         </p>
 
         <div class="rsvp-form">
-            <form id="rsvpForm" onsubmit="submitRSVP(event)">
+            <form id="rsvpForm">
                 <div class="form-group">
                     <label for="guestName">Nama Lengkap *</label>
                     <input type="text" id="guestName" name="guestName" required placeholder="Masukkan nama Anda">
@@ -2080,6 +2080,12 @@
 
         // Load ucapan saat halaman dimuat
         loadWishes();
+
+        // Event listener untuk form RSVP
+        document.getElementById('rsvpForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            submitRSVP(event);
+        });
 
         // ==================== LOADING SCREEN ====================
         // Sembunyikan loading screen setelah halaman selesai dimuat
