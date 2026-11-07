@@ -1314,7 +1314,7 @@
             <div class="cover-ornament"></div>
 
             <div class="cover-to">Kepada Yth. Bapak/Ibu/Saudara/i</div>
-            <div class="cover-guest" id="guestName">Tamu Undangan</div>
+            <div class="cover-guest" id="coverGuestName">Tamu Undangan</div>
             <div class="cover-disclaimer">*Mohon maaf apabila ada kesalahan penulisan nama/gelar</div>
 
             <button class="btn-open" onclick="openInvitation()">
@@ -1711,7 +1711,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const guestName = urlParams.get('to');
         if (guestName) {
-            document.getElementById('guestName').textContent = decodeURIComponent(guestName.replace('+', ' '));
+            document.getElementById('coverGuestName').textContent = decodeURIComponent(guestName.replace('+', ' '));
         }
 
         // ==================== OPEN INVITATION ====================
