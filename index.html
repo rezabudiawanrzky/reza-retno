@@ -1228,6 +1228,23 @@
 
             .section { padding: 60px 16px; }
         }
+
+        /* ==================== iOS Safari Fix ==================== */
+        /* iOS Safari tidak mendukung background-attachment: fixed dengan baik */
+        @supports (-webkit-touch-callout: none) {
+            .hero,
+            .quran-section,
+            .couple-section,
+            .story-section,
+            .event-section,
+            .gallery-section,
+            .gift-section,
+            .prayer-section,
+            .rsvp-section,
+            .footer {
+                background-attachment: scroll !important;
+            }
+        }
     </style>
 </head>
 <body class="locked">
