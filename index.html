@@ -2025,43 +2025,57 @@
         // Submit form RSVP
         function submitRSVP(event) {
             event.preventDefault();
-            
-            const name = document.getElementById('guestName').value.trim();
-            const attendance = document.getElementById('attendance').value;
-            const message = document.getElementById('wishMessage').value.trim();
-            
+            console.log('Form submit triggered');
+
+            const nameInput = document.getElementById('guestName');
+            const attendanceInput = document.getElementById('attendance');
+            const messageInput = document.getElementById('wishMessage');
+
+            const name = nameInput ? nameInput.value.trim() : '';
+            const attendance = attendanceInput ? attendanceInput.value : '';
+            const message = messageInput ? messageInput.value.trim() : '';
+
+            console.log('Form values:', { name, attendance, message });
+
             if (!name || !attendance) {
                 alert('Mohon isi nama dan konfirmasi kehadiran');
                 return;
             }
-            
+
             // Buat objek wish
             const wish = {
                 name: name,
                 attendance: attendance,
                 message: message || 'Selamat menempuh hidup baru! Semoga menjadi keluarga yang sakinah, mawaddah, warahmah.',
-                time: new Date().toLocaleString('id-ID', { 
-                    dateStyle: 'medium', 
-                    timeStyle: 'short' 
+                time: new Date().toLocaleString('id-ID', {
+                    dateStyle: 'medium',
+                    timeStyle: 'short'
                 })
             };
-            
+
+            console.log('Wish object:', wish);
+
             // Simpan ke localStorage
             const wishes = JSON.parse(localStorage.getItem('weddingWishes') || '[]');
             wishes.push(wish);
             localStorage.setItem('weddingWishes', JSON.stringify(wishes));
-            
+            console.log('Wishes saved:', wishes);
+
             // Reload tampilan ucapan
             loadWishes();
-            
+
             // Reset form
-            document.getElementById('rsvpForm').reset();
-            
+            const form = document.getElementById('rsvpForm');
+            if (form) form.reset();
+
             // Alert sukses
             alert(`Terima kasih ${name}! Konfirmasi kehadiran Anda telah dikirim.`);
-            
+
             // Scroll ke bagian ucapan
-            document.getElementById('wishesList').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const wishesList = document.getElementById('wishesList');
+            if (wishesList) {
+                wishesList.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
 
         // Load ucapan saat halaman dimuat
